@@ -10,10 +10,13 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
+COPY alembic.ini docker-entrypoint.sh ./
+COPY migrations ./migrations
 COPY app ./app
 
 RUN useradd --create-home --uid 10001 appuser \
     && mkdir -p /app/uploads \
+    && chmod +x /app/docker-entrypoint.sh \
     && chown -R appuser:appuser /app
 
 USER appuser
@@ -22,4 +25,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 8000
 
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
