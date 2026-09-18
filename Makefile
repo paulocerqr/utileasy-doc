@@ -1,8 +1,11 @@
-.PHONY: install dev-backend dev-frontend lint format-check format test build compose-up compose-down
+.PHONY: install migrate dev-backend dev-frontend lint format-check format test build compose-up compose-down
 
 install:
 	cd frontend && npm ci
 	cd backend && uv sync --dev
+
+migrate:
+	cd backend && uv run alembic upgrade head
 
 dev-backend:
 	cd backend && uv run uvicorn app.main:app --reload
