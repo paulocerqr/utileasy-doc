@@ -1,0 +1,1 @@
+"""Comment persistence adapters."""
