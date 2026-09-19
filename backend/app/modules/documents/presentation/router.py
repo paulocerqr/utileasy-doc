@@ -9,7 +9,7 @@ from app.infrastructure.storage.local import LocalFileStorage
 from app.modules.documents.application.create_document import CreateDocument
 from app.modules.documents.domain.storage import InvalidUploadError
 from app.modules.documents.infrastructure.unit_of_work import SqlAlchemyDocumentUnitOfWork
-from app.modules.documents.presentation.schemas import UploadDocumentResponse
+from app.modules.documents.presentation.schemas import DocumentResponse, UploadDocumentResponse
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -48,13 +48,6 @@ async def upload_document(
     document = result.document
     response.status_code = 200 if result.already_exists else 201
     return UploadDocumentResponse(
-        id=document.id,
-        title=document.title,
-        description=document.description,
-        original_filename=document.original_filename,
-        mime_type=document.mime_type,
-        size_bytes=document.size_bytes,
-        sha256=document.sha256,
-        uploaded_at=document.uploaded_at,
+        **DocumentResponse.from_document(document).model_dump(),
         already_exists=result.already_exists,
     )

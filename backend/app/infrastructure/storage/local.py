@@ -7,8 +7,12 @@ from typing import BinaryIO
 
 from PIL import Image, UnidentifiedImageError
 
-from app.modules.documents.domain.entities import AllowedMimeType
-from app.modules.documents.domain.storage import InvalidUploadError, StagedFile
+from app.modules.documents.domain.entities import AllowedMimeType, Document
+from app.modules.documents.domain.storage import (
+    InvalidUploadError,
+    StagedFile,
+    StoredFileUnavailableError,
+)
 
 CHUNK_SIZE = 1024 * 1024
 PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
@@ -98,6 +102,38 @@ class LocalFileStorage:
 
     def remove_published(self, staged: StagedFile) -> None:
         (self.directory / staged.stored_filename).unlink(missing_ok=True)
+
+    def resolve(self, document: Document) -> Path:
+        extension = next(
+            (
+                suffix
+                for mime_type, suffix in FILE_TYPES.values()
+                if mime_type == document.mime_type
+            ),
+            None,
+        )
+        expected_name = f"{document.sha256}{extension}"
+        if (
+            extension is None
+            or len(document.sha256) != 64
+            or any(char not in "0123456789abcdef" for char in document.sha256)
+            or document.stored_filename != expected_name
+        ):
+            raise StoredFileUnavailableError("Metadados do arquivo inconsistentes.")
+
+        path = self.directory / expected_name
+        try:
+            if (
+                path.is_symlink()
+                or not path.is_file()
+                or path.stat().st_size != document.size_bytes
+            ):
+                raise StoredFileUnavailableError("Arquivo ausente ou inconsistente.")
+            if self._sha256(path) != document.sha256:
+                raise StoredFileUnavailableError("Hash do arquivo inconsistente.")
+        except OSError as error:
+            raise StoredFileUnavailableError("Arquivo indisponível.") from error
+        return path
 
     @staticmethod
     def _sha256(path: Path) -> str:

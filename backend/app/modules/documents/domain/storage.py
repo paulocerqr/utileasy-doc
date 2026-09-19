@@ -2,11 +2,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import BinaryIO, Protocol
 
-from app.modules.documents.domain.entities import AllowedMimeType
+from app.modules.documents.domain.entities import AllowedMimeType, Document
 
 
 class InvalidUploadError(ValueError):
     """O arquivo ou seus metadados enviados pelo usuário são inválidos."""
+
+
+class StoredFileUnavailableError(OSError):
+    """O arquivo armazenado não está disponível ou está inconsistente."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,3 +32,5 @@ class FileStorage(Protocol):
     def discard(self, staged: StagedFile) -> None: ...
 
     def remove_published(self, staged: StagedFile) -> None: ...
+
+    def resolve(self, document: Document) -> Path: ...

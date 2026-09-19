@@ -41,6 +41,8 @@ def test_document_repository_persists_and_searches_documents(
     assert repository.get_by_id(first_id) is not None
     assert [document.id for document in repository.list_all()] == [second_id, first_id]
     assert [document.id for document in repository.list_all("SEGUNDO")] == [second_id]
+    assert [document.id for document in repository.list_all(limit=1, offset=1)] == [first_id]
+    assert repository.list_all("%") == []
     assert repository.get_by_id(999_999) is None
 
 

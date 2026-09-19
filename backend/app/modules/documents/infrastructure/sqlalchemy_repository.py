@@ -39,7 +39,9 @@ class SqlAlchemyDocumentRepository:
         model = self._session.get(DocumentModel, document_id)
         return self._to_entity(model) if model is not None else None
 
-    def list_all(self, search: str | None = None) -> list[Document]:
+    def list_all(
+        self, search: str | None = None, limit: int = 50, offset: int = 0
+    ) -> list[Document]:
         statement: Select[tuple[DocumentModel]] = select(DocumentModel)
 
         if search and (normalized_search := search.strip()):
@@ -48,7 +50,11 @@ class SqlAlchemyDocumentRepository:
                 | DocumentModel.description.icontains(normalized_search, autoescape=True)
             )
 
-        statement = statement.order_by(DocumentModel.uploaded_at.desc(), DocumentModel.id.desc())
+        statement = (
+            statement.order_by(DocumentModel.uploaded_at.desc(), DocumentModel.id.desc())
+            .limit(limit)
+            .offset(offset)
+        )
         return [self._to_entity(model) for model in self._session.scalars(statement)]
 
     @staticmethod
