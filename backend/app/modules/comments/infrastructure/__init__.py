@@ -1,1 +1,1 @@
-"""Comment persistence adapters."""
+"""Adaptadores de persistência dos comentários."""

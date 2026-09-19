@@ -1,1 +1,1 @@
-"""HTTP presentation layer."""
+"""Camada de apresentação HTTP."""

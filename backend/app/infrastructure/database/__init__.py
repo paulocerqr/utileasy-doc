@@ -1,1 +1,1 @@
-"""Database configuration and session management."""
+"""Configuração do banco de dados e gerenciamento de sessões."""

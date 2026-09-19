@@ -1,1 +1,1 @@
-"""Document comments module."""
+"""Módulo de comentários dos documentos."""

@@ -1,4 +1,4 @@
-"""Create documents and comments tables."""
+"""Cria as tabelas de documentos e comentários."""
 
 from collections.abc import Sequence
 

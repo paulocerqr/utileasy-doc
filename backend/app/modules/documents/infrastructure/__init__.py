@@ -1,1 +1,1 @@
-"""Document persistence adapters."""
+"""Adaptadores de persistência dos documentos."""

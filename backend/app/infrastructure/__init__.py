@@ -1,1 +1,1 @@
-"""Infrastructure adapters shared by application modules."""
+"""Adaptadores de infraestrutura compartilhados pelos módulos da aplicação."""

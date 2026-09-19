@@ -1,1 +1,1 @@
-"""Document domain objects and ports."""
+"""Objetos de domínio e contratos dos documentos."""

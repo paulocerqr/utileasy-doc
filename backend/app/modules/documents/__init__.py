@@ -1,1 +1,1 @@
-"""Document management module."""
+"""Módulo de gestão de documentos."""

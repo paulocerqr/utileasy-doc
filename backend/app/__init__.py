@@ -1,1 +1,1 @@
-"""UtileasyDoc API package."""
+"""Pacote da API UtileasyDoc."""

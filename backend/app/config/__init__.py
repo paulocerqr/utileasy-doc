@@ -1,1 +1,1 @@
-"""Application configuration."""
+"""Configuração da aplicação."""
