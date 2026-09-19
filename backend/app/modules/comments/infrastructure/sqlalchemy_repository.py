@@ -20,11 +20,15 @@ class SqlAlchemyCommentRepository:
         self._session.refresh(model)
         return self._to_entity(model)
 
-    def list_for_document(self, document_id: int) -> list[Comment]:
+    def list_for_document(
+        self, document_id: int, limit: int = 100, offset: int = 0
+    ) -> list[Comment]:
         statement = (
             select(CommentModel)
             .where(CommentModel.document_id == document_id)
             .order_by(CommentModel.created_at.asc(), CommentModel.id.asc())
+            .limit(limit)
+            .offset(offset)
         )
         return [self._to_entity(model) for model in self._session.scalars(statement)]
 

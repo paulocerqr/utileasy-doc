@@ -73,3 +73,5 @@ def test_comment_repository_lists_only_comments_from_requested_document(
 
     assert [comment.id for comment in comments] == [first_comment.id, second_comment.id]
     assert comments[1].author_name == "Anônimo"
+    paged_comments = comment_repository.list_for_document(first_document_id, 1, 1)
+    assert [comment.id for comment in paged_comments] == [second_comment.id]
