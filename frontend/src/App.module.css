@@ -1,34 +1,31 @@
 .appShell {
   min-height: 100vh;
-  background: #ffffff;
+  background: #fff;
 }
 
 .header {
-  display: flex;
-  min-height: 4rem;
-  align-items: center;
   border-bottom: 1px solid #e5e5e5;
-  padding: 0 2rem;
+}
+
+.headerInner {
+  width: min(100% - 2rem, 85rem);
+  min-height: 5rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .brand {
   color: #171717;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
+  text-decoration: none;
 }
 
-.main {
-  width: min(100% - 2rem, 60rem);
-  margin: 0 auto;
-  padding: 2rem 0;
-}
-
-.main h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.main p {
-  margin: 0.25rem 0 0;
-  color: #737373;
+@media (max-width: 40rem) {
+  .headerInner {
+    min-height: 4.5rem;
+  }
 }

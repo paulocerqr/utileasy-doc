@@ -1,0 +1,72 @@
+.panel {
+  min-width: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.panel h2 {
+  margin: 0;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 0.95rem;
+}
+.history {
+  padding: 0 1.25rem;
+}
+.comment {
+  display: flex;
+  gap: 0.7rem;
+  padding: 1.1rem 0;
+}
+.comment + .comment {
+  border-top: 1px solid #e5e5e5;
+}
+.avatar {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f5f5f5;
+  color: #525252;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.commentBody {
+  min-width: 0;
+  display: grid;
+  gap: 0.1rem;
+  font-size: 0.8rem;
+}
+.commentBody strong {
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+.commentBody time {
+  color: #737373;
+  font-size: 0.72rem;
+}
+.commentBody p {
+  margin: 0.45rem 0 0;
+  color: #525252;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.status {
+  padding: 1.5rem 0;
+  margin: 0;
+  color: #737373;
+  font-size: 0.8rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #e5e5e5;
+}
+.form button {
+  align-self: flex-end;
+}

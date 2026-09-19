@@ -1,0 +1,109 @@
+.main {
+  width: min(100% - 2rem, 70rem);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.back {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #525252;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.back:hover {
+  color: #171717;
+  text-decoration: underline;
+}
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22.5rem;
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+.documentCard {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+}
+.documentHeader {
+  padding: 1.5rem;
+}
+.documentHeader h1 {
+  margin: 0 0 0.7rem;
+  font-size: 1.25rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
+  color: #737373;
+  font-size: 0.8rem;
+}
+.metadata span:first-child {
+  overflow-wrap: anywhere;
+}
+.description {
+  margin: 1.25rem 0 0;
+  color: #525252;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.previewArea {
+  min-height: 24rem;
+  padding: 1.5rem;
+  border-top: 1px solid #e5e5e5;
+  background: #fafafa;
+  display: grid;
+  place-items: center;
+}
+.pdfPreview {
+  width: 100%;
+  min-height: 34rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: #fff;
+}
+.imagePreview {
+  display: block;
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+.notice {
+  padding: 0.8rem 1rem;
+  border-radius: 0.4rem;
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 0.875rem;
+}
+.status {
+  color: #737373;
+}
+
+@media (max-width: 50rem) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .previewArea {
+    padding: 1rem;
+  }
+  .pdfPreview {
+    min-height: 26rem;
+  }
+}
