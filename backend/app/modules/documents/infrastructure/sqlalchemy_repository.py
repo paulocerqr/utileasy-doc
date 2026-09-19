@@ -1,6 +1,6 @@
 from typing import cast
 
-from sqlalchemy import Select, select
+from sqlalchemy import Select, select, text
 from sqlalchemy.orm import Session
 
 from app.modules.documents.domain.entities import AllowedMimeType, Document, NewDocument
@@ -19,11 +19,21 @@ class SqlAlchemyDocumentRepository:
             stored_filename=document.stored_filename,
             mime_type=document.mime_type,
             size_bytes=document.size_bytes,
+            sha256=document.sha256,
         )
         self._session.add(model)
         self._session.flush()
         self._session.refresh(model)
         return self._to_entity(model)
+
+    def get_by_hash(self, sha256: str) -> Document | None:
+        model = self._session.scalar(select(DocumentModel).where(DocumentModel.sha256 == sha256))
+        return self._to_entity(model) if model is not None else None
+
+    def lock_hash(self, sha256: str) -> None:
+        # O mesmo conteúdo usa o mesmo bloqueio transacional do PostgreSQL.
+        lock_key = int.from_bytes(bytes.fromhex(sha256)[:8], byteorder="big", signed=True)
+        self._session.execute(text("SELECT pg_advisory_xact_lock(:key)"), {"key": lock_key})
 
     def get_by_id(self, document_id: int) -> Document | None:
         model = self._session.get(DocumentModel, document_id)
@@ -51,5 +61,6 @@ class SqlAlchemyDocumentRepository:
             stored_filename=model.stored_filename,
             mime_type=cast(AllowedMimeType, model.mime_type),
             size_bytes=model.size_bytes,
+            sha256=model.sha256,
             uploaded_at=model.uploaded_at,
         )

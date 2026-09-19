@@ -13,6 +13,7 @@ class NewDocument:
     stored_filename: str
     mime_type: AllowedMimeType
     size_bytes: int
+    sha256: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,4 +25,5 @@ class Document:
     stored_filename: str
     mime_type: AllowedMimeType
     size_bytes: int
+    sha256: str
     uploaded_at: datetime

@@ -26,6 +26,7 @@ class DocumentModel(Base):
             name="mime_type_allowed",
         ),
         CheckConstraint("size_bytes > 0", name="size_bytes_positive"),
+        CheckConstraint("sha256 ~ '^[0-9a-f]{64}$'", name="sha256_valid"),
         Index("ix_documents_uploaded_at", text("uploaded_at DESC"), text("id DESC")),
     )
 
@@ -36,6 +37,7 @@ class DocumentModel(Base):
     stored_filename: Mapped[str] = mapped_column(String(255), unique=True)
     mime_type: Mapped[str] = mapped_column(String(100))
     size_bytes: Mapped[int] = mapped_column(BigInteger)
+    sha256: Mapped[str] = mapped_column(String(64), unique=True)
     uploaded_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=text("CURRENT_TIMESTAMP"),
